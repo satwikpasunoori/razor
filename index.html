@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Skillshop — Courses</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fff;--ink:#111;--mute:#6b6b6b;--line:#e4e4e4;--panel:#fff;--soft:#f4f4f4;--red:#c8102e;--ghost:#111;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d0d0d;--ink:#f3f3f3;--mute:#9a9a9a;--line:#2c2c2c;--panel:#161616;--soft:#202020;--ghost:#fff;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0d0d0d;--ink:#f3f3f3;--mute:#9a9a9a;--line:#2c2c2c;--panel:#161616;--soft:#202020;--ghost:#fff;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'DM Sans',system-ui,sans-serif;line-height:1.5}
+h1,h2,h3{font-family:'Poppins',system-ui,sans-serif;margin:0;letter-spacing:-.02em}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--red);outline-offset:2px}
+/* poster background */
+.poster{position:absolute;inset:0 0 auto 0;height:900px;overflow:hidden;z-index:0;pointer-events:none;user-select:none}
+.poster b{display:block;font:800 clamp(88px,19vw,260px)/.86 'Poppins',sans-serif;letter-spacing:-.04em;color:var(--ghost);padding:0 4vw;white-space:nowrap}
+.poster i{position:absolute;font:400 13px 'DM Sans';letter-spacing:.4em;color:var(--ghost)}
+.shell{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:0 20px}
+nav{display:flex;justify-content:space-between;align-items:center;padding:22px 0}
+nav .logo{font:800 20px 'Poppins';background:var(--bg);padding:2px 10px}
+nav a{color:var(--ink);text-decoration:none;font-weight:500;background:var(--bg);padding:2px 10px}
+/* overlapping panel */
+.hero{margin-top:230px;background:var(--panel);border:2px solid var(--ink);padding:36px;max-width:640px;box-shadow:14px 14px 0 var(--ink)}
+.hero h1{font-size:clamp(30px,5vw,48px);line-height:1.05}
+.hero p{color:var(--mute);margin:14px 0 24px;max-width:46ch}
+.btn{border:2px solid var(--ink);background:var(--ink);color:var(--bg);padding:11px 20px;font-weight:700}
+.btn.red{background:var(--red);border-color:var(--red);color:#fff}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn.sm{padding:6px 12px;font-size:14px}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.sheet{background:var(--panel);border:2px solid var(--ink);margin:70px 0 40px;padding:32px}
+.sheet h2{font-size:28px;margin-bottom:22px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px}
+.card{border:1px solid var(--line);background:var(--soft);display:flex;flex-direction:column}
+.card .top{padding:26px 20px;border-bottom:1px solid var(--line);font:800 44px/1 'Poppins';letter-spacing:-.04em}
+.card .body{padding:18px 20px;display:flex;flex-direction:column;gap:8px;flex:1}
+.card h3{font-size:18px}
+.card p{margin:0;color:var(--mute);font-size:15px}
+.meta{font-size:13px;color:var(--mute)}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:auto;padding-top:12px}
+.price{font:800 22px 'Poppins'}
+.tag{font-size:12px;font-weight:700;border:1px solid var(--ink);padding:1px 8px}
+footer{padding:20px 0 50px;color:var(--mute);font-size:14px;display:flex;justify-content:space-between}
+footer a{color:var(--mute)}
+/* modal */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:50;padding:16px}
+.modal.on{display:flex}
+.dlg{background:var(--panel);border:2px solid var(--ink);max-width:560px;width:100%;max-height:90vh;overflow:auto;padding:26px}
+.slot{display:flex;justify-content:space-between;align-items:center;border:1px solid var(--line);padding:10px 12px;margin:8px 0;gap:8px}
+.slot input[type=radio]{accent-color:var(--red)}
+label.f{display:block;font-size:13px;font-weight:700;margin:12px 0 4px}
+input[type=text],input[type=email],input[type=date],input[type=time],input[type=number],input[type=password],textarea,select{width:100%;padding:9px 10px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:inherit}
+textarea{min-height:80px}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 18px;font-weight:700;z-index:99;display:none}
+/* admin */
+.admin{max-width:900px;margin:40px auto;background:var(--panel);border:2px solid var(--ink);padding:28px}
+.arow{display:flex;flex-wrap:wrap;gap:10px;align-items:center;border-bottom:1px solid var(--line);padding:14px 0}
+.arow .t{flex:1;min-width:200px;font-weight:700}
+.stepper{display:flex;align-items:center;gap:6px}
+.stepper b{min-width:76px;text-align:center;font-family:'Poppins'}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.hide{display:none!important}.ok{color:#1a7f37}.mail{border:1px dashed var(--ink);padding:12px;font-size:14px;margin:12px 0;background:var(--soft)}.booked{opacity:.55}
+@media(max-width:560px){.hero{padding:22px;box-shadow:8px 8px 0 var(--ink)}.sheet,.admin{padding:18px}.two{grid-template-columns:1fr}.poster{height:620px}.hero{margin-top:150px}}
+@media (prefers-reduced-motion:no-preference){.hero{animation:rise .6s ease-out both}@keyframes rise{from{transform:translateY(24px);opacity:0}}}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</head>
+<body>
+<div id="site">
+  <div class="poster" aria-hidden="true"><b>LEARN</b><b>BUILD</b><b>EARN</b><i style="left:6vw;top:830px">START TODAY</i><i style="right:6vw;top:830px;letter-spacing:.1em;font-style:italic">v1.0</i></div>
+  <div class="shell">
+    <nav><span class="logo">Skillshop</span><a href="#courses">Courses</a></nav>
+    <section class="hero">
+      <h1>Learn it properly. Build it for real.</h1>
+      <p>Live, project-based courses taught in small batches. Pick a course, choose a free time with your teacher, and get the syllabus before you pay.</p>
+      <button class="btn red" onclick="document.getElementById('courses').scrollIntoView({behavior:'smooth'})">Browse courses</button>
+    </section>
+    <section class="sheet" id="courses"><h2>Courses</h2><div class="grid" id="grid"><p class="meta">Loading courses…</p></div></section>
+    <footer><span>© 2026 Skillshop</span><span>One teacher. One slot at a time.</span></footer>
+  </div>
+</div>
+
+<div id="adminLogin" class="hide"><div class="admin" style="max-width:380px">
+  <h2>Admin login</h2>
+  <p class="meta">For the site owner only.</p>
+  <label class="f" for="u">Email</label><input type="email" id="u" autocomplete="username">
+  <label class="f" for="p">Password</label><input type="password" id="p" autocomplete="current-password" onkeydown="if(event.key==='Enter')login()">
+  <p style="display:flex;gap:10px;margin-top:20px"><button class="btn" onclick="login()">Sign in</button><button class="btn ghost" onclick="location.hash=''">Back to site</button></p>
+  <p id="err" class="meta" style="color:var(--red)"></p>
+</div></div>
+
+<div id="adminApp" class="hide"><div class="admin">
+  <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
+    <h2>Manage Skillshop</h2>
+    <span style="display:flex;gap:8px"><button class="btn red sm" onclick="editCourse(null)">Add course</button><button class="btn ghost sm" onclick="location.hash=''">View site</button><button class="btn ghost sm" onclick="logout()">Log out</button></span>
+  </div>
+  <h3 style="margin:18px 0 6px;font-size:18px">Courses</h3><div id="alist"></div><h3 style="margin:30px 0 6px;font-size:18px">Teacher calendar</h3><p class="meta">One calendar for every course. A booked time is blocked for all courses.</p><div class="two" style="align-items:end;margin:10px 0"><div><label class="f" for="n_d">Date</label><input type="date" id="n_d"></div><div><label class="f" for="n_t">Time (IST)</label><input type="time" id="n_t"></div></div><p><button class="btn red sm" onclick="addSlot()">Add slot</button></p><div id="slist"></div><h3 style="margin:30px 0 6px;font-size:18px">Bookings</h3><div id="blist"></div>
+</div></div>
+
+<div class="modal" id="m"><div class="dlg" id="dlg" role="dialog" aria-modal="true"></div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+const SB_URL='https://cgcxtmveikvcrwsyvbrk.supabase.co',SB_KEY='sb_publishable_WGscO8cwap8z4eFOjN_PZw_Gt1G8xhQ';
+const sb=supabase.createClient(SB_URL,SB_KEY);
+let courses=[],slots=[],admin=false,bk={},draft=null,busy=false;
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const inr=n=>'₹'+Number(n).toLocaleString('en-IN');
+const fmt=iso=>new Date(iso).toLocaleString('en-IN',{weekday:'short',day:'numeric',month:'short',hour:'numeric',minute:'2-digit',timeZone:'Asia/Kolkata'})+' IST';
+const free=s=>new Date(s.starts_at)>new Date()&&(s.status==='open'||(s.status==='held'&&new Date(s.held_until)<new Date()));
+const pdfUrl=p=>p?sb.storage.from('syllabi').getPublicUrl(p).data.publicUrl:null;
+function toast(t){const e=$('toast');e.textContent=t;e.style.display='block';clearTimeout(toast.t);toast.t=setTimeout(()=>e.style.display='none',2800)}
+async function load(){
+  const [c,s]=await Promise.all([sb.from('courses').select('*').order('created_at'),sb.from('slots').select('*').order('starts_at')]);
+  if(c.error||s.error){$('grid').innerHTML='<p>Could not load courses. Please refresh.</p>';return}
+  courses=c.data;slots=s.data;renderSite();if(admin)renderAdmin();
+}
+function renderSite(){
+  const n=slots.filter(free).length;
+  $('grid').innerHTML=courses.filter(c=>c.published).map(c=>`<article class="card"><div class="top">${esc(c.title.split(' ').slice(-1)[0]).slice(0,10)}</div>
+  <div class="body"><span class="meta">${esc(c.level)} · ${esc(c.duration)}</span><h3>${esc(c.title)}</h3><p>${esc(c.description)}</p>
+  <div class="row"><span class="price">${inr(c.price_inr)}</span><span class="tag">${n?n+' slots open':'No open slots'}</span></div>
+  <button class="btn" onclick="openCourse('${c.id}')">View details</button></div></article>`).join('')||'<p>No courses yet.</p>';
+}
+function openCourse(id){
+  const c=courses.find(x=>x.id===id),o=slots.filter(free);bk={cid:id};const u=pdfUrl(c.syllabus_path);
+  $('dlg').innerHTML=`<h2>${esc(c.title)}</h2><p class="meta">${esc(c.level)} · ${esc(c.duration)}</p><p>${esc(c.description)}</p>
+  ${u?`<p><a href="${u}" target="_blank" rel="noopener" class="btn ghost sm" style="text-decoration:none;display:inline-block">Download syllabus (PDF)</a></p>`:'<p class="meta">Syllabus PDF not uploaded yet.</p>'}
+  <h3 style="font-size:16px;margin-top:18px">Choose a time with your teacher</h3>
+  ${o.length?o.map((s,i)=>`<label class="slot"><span><input type="radio" name="sl" value="${s.id}" ${i?'':'checked'}> ${esc(fmt(s.starts_at))}</span></label>`).join(''):'<p class="meta">No free times right now. Please check back soon.</p>'}
+  <label class="f" for="b_n">Your name</label><input type="text" id="b_n" autocomplete="name"><label class="f" for="b_e">Email</label><input type="email" id="b_e" autocomplete="email">
+  <p id="berr" class="meta" style="color:var(--red)"></p>
+  <div class="row" style="margin-top:12px"><span class="price">${inr(c.price_inr)}</span><span style="display:flex;gap:8px"><button class="btn ghost" onclick="closeM()">Close</button><button class="btn red" id="paybtn" ${o.length?'':'disabled'} onclick="pay()">Pay ${inr(c.price_inr)}</button></span></div>`;
+  $('m').classList.add('on');
+}
+async function call(fn,body){const r=await fetch(`${SB_URL}/functions/v1/${fn}`,{method:'POST',headers:{'Content-Type':'application/json',apikey:SB_KEY,Authorization:'Bearer '+SB_KEY},body:JSON.stringify(body)});return{ok:r.ok,d:await r.json().catch(()=>({}))}}
+async function pay(){
+  const r=document.querySelector('input[name=sl]:checked'),n=$('b_n').value.trim(),e=$('b_e').value.trim();
+  if(!r||!n||!/^\S+@\S+\.\S+$/.test(e)){$('berr').textContent='Pick a time and enter your name and a valid email.';return}
+  if(busy)return;busy=true;$('paybtn').disabled=true;$('berr').textContent='';
+  const o=await call('create-order',{slot_id:r.value,course_id:bk.cid,name:n,email:e});
+  if(!o.ok){busy=false;await load();
+    if(o.d.error==='slot_unavailable'){$('dlg').innerHTML=`<h2>Slot just taken</h2><p>Someone booked that time first. Choose another free time.</p><button class="btn red" onclick="openCourse('${bk.cid}')">Choose another time</button>`}
+    else{$('berr').textContent='Payment could not start. Please try again.';$('paybtn').disabled=false}return}
+  const rz=new Razorpay({key:o.d.key_id,order_id:o.d.order_id,amount:o.d.amount,currency:o.d.currency,name:'Skillshop',prefill:{name:n,email:e},theme:{color:'#c8102e'},
+    modal:{ondismiss:()=>{busy=false;$('paybtn')&&($('paybtn').disabled=false);toast('Payment cancelled. Your time is held for 10 minutes.')}},
+    handler:async resp=>{const v=await call('verify-payment',resp);busy=false;await load();
+      if(v.ok)$('dlg').innerHTML=`<h2 class="ok">Booking confirmed</h2><p>${esc(fmt(v.d.starts_at))} is reserved for you for ${esc(v.d.course)}.</p><p class="meta">${v.d.emailed?'A confirmation email is on its way to '+esc(e)+'.':'Payment received. We could not send the email, so please contact us if you do not hear from us.'}</p><button class="btn" onclick="closeM()">Done</button>`;
+      else $('dlg').innerHTML=`<h2>We could not confirm your booking</h2><p>If money was deducted, contact us with payment ID ${esc(resp.razorpay_payment_id)}.</p><button class="btn" onclick="closeM()">Close</button>`}});
+  rz.on('payment.failed',()=>toast('Payment failed. You can try again.'));rz.open();
+}
+function closeM(){$('m').classList.remove('on')}
+$('m').addEventListener('click',e=>{if(e.target.id==='m')closeM()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeM()});
+
+/* admin */
+async function renderAdmin(){
+  $('alist').innerHTML=courses.map(c=>`<div class="arow"><span class="t">${esc(c.title)}<br><span class="meta">${c.syllabus_path?'PDF attached':'no PDF'}${c.published?'':' · hidden'}</span></span>
+  <span class="stepper"><button class="btn ghost sm" aria-label="Decrease price" onclick="bump('${c.id}',-500)">−</button><b>${inr(c.price_inr)}</b><button class="btn ghost sm" aria-label="Increase price" onclick="bump('${c.id}',500)">+</button></span>
+  <button class="btn sm" onclick="editCourse('${c.id}')">Edit</button><button class="btn ghost sm" onclick="delCourse('${c.id}')">Delete</button></div>`).join('')||'<p>No courses. Add one.</p>';
+  const {data:b}=await sb.from('bookings').select('id,slot_id,name,email,status,courses(title)').in('status',['pending','paid']);
+  const bs={};(b||[]).forEach(x=>bs[x.slot_id]=x);
+  $('slist').innerHTML=slots.map(s=>{const x=bs[s.id];return `<div class="arow"><span class="t">${esc(fmt(s.starts_at))}<br><span class="meta">${s.status==='booked'&&x?'Booked: '+esc(x.name)+' ('+esc(x.email)+') · '+esc(x.courses?.title):s.status==='held'&&new Date(s.held_until)>new Date()?'Held during checkout':'Open'}</span></span><button class="btn ghost sm" onclick="delSlot('${s.id}')">Delete</button></div>`}).join('')||'<p class="meta">No slots yet.</p>';
+  $('blist').innerHTML=(b||[]).filter(x=>x.status==='paid').map(x=>`<div class="arow"><span class="t">${esc(x.name)}<br><span class="meta">${esc(x.email)} · ${esc(x.courses?.title)}</span></span></div>`).join('')||'<p class="meta">No paid bookings yet.</p>';
+}
+async function mut(p,msg){const r=await p;if(r.error){toast(r.error.code==='23503'?'This item has bookings, so it cannot be deleted.':r.error.code==='23505'?'That time already exists.':'Something went wrong.');return false}await load();if(msg)toast(msg);return true}
+function bump(id,d){const c=courses.find(x=>x.id===id);mut(sb.from('courses').update({price_inr:Math.max(0,c.price_inr+d)}).eq('id',id))}
+function delCourse(id){if(confirm('Delete this course?'))mut(sb.from('courses').delete().eq('id',id),'Course deleted')}
+function addSlot(){const d=$('n_d').value,t=$('n_t').value;if(!d||!t){toast('Pick a date and time');return}
+  mut(sb.from('slots').insert({starts_at:new Date(d+'T'+t+':00+05:30').toISOString()}),'Slot added')}
+function delSlot(id){if(confirm('Delete this slot?'))mut(sb.from('slots').delete().eq('id',id),'Slot deleted')}
+function editCourse(id){
+  draft=id?{...courses.find(c=>c.id===id)}:{title:'',level:'Beginner',duration:'',price_inr:0,description:'',syllabus_path:null,published:true,isNew:true};
+  draft.file=null;drawEditor();$('m').classList.add('on');
+}
+function drawEditor(){const d=draft;
+  $('dlg').innerHTML=`<h2>${d.isNew?'Add course':'Edit course'}</h2>
+  <label class="f" for="e_t">Title</label><input type="text" id="e_t" value="${esc(d.title)}">
+  <div class="two"><div><label class="f" for="e_p">Price (₹)</label><input type="number" id="e_p" min="0" value="${d.price_inr}"></div>
+  <div><label class="f" for="e_d">Duration</label><input type="text" id="e_d" value="${esc(d.duration)}" placeholder="6 weeks"></div></div>
+  <label class="f" for="e_l">Level</label><select id="e_l">${['Beginner','Intermediate','Advanced'].map(l=>`<option ${l===d.level?'selected':''}>${l}</option>`).join('')}</select>
+  <label class="f" for="e_x">Details</label><textarea id="e_x">${esc(d.description)}</textarea>
+  <label class="f"><input type="checkbox" id="e_v" ${d.published?'checked':''}> Show on website</label>
+  <label class="f" for="e_f">Syllabus PDF</label>${d.syllabus_path?`<p class="meta">A PDF is attached. Choose a file to replace it, or <button class="btn ghost sm" onclick="keep();draft.syllabus_path=null;drawEditor()">Remove</button></p>`:''}
+  <input type="file" id="e_f" accept="application/pdf">
+  <div class="row" style="margin-top:20px"><button class="btn ghost" onclick="closeM()">Cancel</button><button class="btn red" id="sv" onclick="saveCourse()">Save changes</button></div>`}
+function keep(){if(!$('e_t'))return;const d=draft;d.title=$('e_t').value;d.price_inr=+$('e_p').value||0;d.duration=$('e_d').value;d.level=$('e_l').value;d.description=$('e_x').value;d.published=$('e_v').checked}
+async function saveCourse(){
+  keep();const d=draft;if(!d.title.trim()){toast('Add a title');return}
+  $('sv').disabled=true;const f=$('e_f').files[0];
+  if(f){if(f.type!=='application/pdf'||f.size>10e6){toast('Choose a PDF under 10 MB');$('sv').disabled=false;return}
+    const path=`${Date.now()}-${f.name.replace(/[^\w.-]/g,'_')}`;const u=await sb.storage.from('syllabi').upload(path,f,{contentType:'application/pdf'});
+    if(u.error){toast('PDF upload failed');$('sv').disabled=false;return}d.syllabus_path=path}
+  const row={title:d.title.trim(),level:d.level,duration:d.duration,price_inr:d.price_inr,description:d.description,syllabus_path:d.syllabus_path,published:d.published};
+  const ok=await mut(d.isNew?sb.from('courses').insert(row):sb.from('courses').update(row).eq('id',d.id),'Saved');
+  if(ok)closeM();else $('sv').disabled=false;
+}
+async function login(){
+  const {error}=await sb.auth.signInWithPassword({email:$('u').value.trim(),password:$('p').value});
+  if(error){$('err').textContent='Wrong email or password.';return}
+  if(!await checkAdmin()){$('err').textContent='This account is not an admin.';await sb.auth.signOut();return}
+  location.hash='#/manage-portal';route();
+}
+async function checkAdmin(){const {data:{session}}=await sb.auth.getSession();if(!session)return admin=false;
+  const {data}=await sb.from('admins').select('user_id').eq('user_id',session.user.id).maybeSingle();return admin=!!data}
+async function logout(){await sb.auth.signOut();admin=false;location.hash=''}
+function route(){
+  const a=location.hash.startsWith('#/manage-portal');
+  $('site').classList.toggle('hide',a);
+  $('adminLogin').classList.toggle('hide',!(a&&!admin));
+  $('adminApp').classList.toggle('hide',!(a&&admin));
+  if(a&&admin)load();window.scrollTo(0,0);
+}
+addEventListener('hashchange',route);
+(async()=>{await checkAdmin();await load();route()})();
+</script>
+</body>
+</html>
