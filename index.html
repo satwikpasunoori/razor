@@ -80,7 +80,7 @@ textarea{min-height:80px}
       <p>Live one-hour 1:1 sessions on trading, AI tools, money and fitness. Pick a topic, choose a time that suits you, and get the details before you pay.</p>
       <button class="btn red" onclick="document.getElementById('sessions').scrollIntoView({behavior:'smooth'})">Browse sessions</button>
     </section>
-    <section class="sheet" id="sessions"><h2>Sessions</h2><div id="chips" style="display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 14px"></div><div class="grid" id="grid"><p class="meta">Loading sessions…</p></div></section>
+    <section class="sheet" id="sessions"><h2>Sessions</h2><div class="grid" id="grid"><p class="meta">Loading sessions…</p></div></section>
     <footer><span>© 2026 Skillshop</span><span>Live 1:1 sessions. One hour, fully yours.</span></footer>
   </div>
 </div>
@@ -108,7 +108,7 @@ textarea{min-height:80px}
 <script>
 const SB_URL='https://cgcxtmveikvcrwsyvbrk.supabase.co',SB_KEY='sb_publishable_WGscO8cwap8z4eFOjN_PZw_Gt1G8xhQ';
 const sb=supabase.createClient(SB_URL,SB_KEY);
-let filt='All',courses=[],slots=[],admin=false,bk={},draft=null,busy=false;
+let courses=[],slots=[],admin=false,bk={},draft=null,busy=false;
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const inr=n=>'₹'+Number(n).toLocaleString('en-IN');
@@ -122,9 +122,8 @@ async function load(){
   courses=c.data;slots=s.data;renderSite();if(admin)renderAdmin();
 }
 function renderSite(){
-  const n=slots.filter(free).length,pub=courses.filter(c=>c.published),cats=['All',...new Set(pub.map(c=>c.category))];
-  $('chips').innerHTML=cats.map(k=>`<button class="btn ${k===filt?'':'ghost'} sm" onclick="filt='${k}';renderSite()">${esc(k)}</button>`).join('');
-  $('grid').innerHTML=pub.filter(c=>filt==='All'||c.category===filt).map(c=>`<article class="card"><div class="top">${esc(c.title.split(' ').slice(-1)[0]).slice(0,10)}</div>
+  const n=slots.filter(free).length,pub=courses.filter(c=>c.published);
+  $('grid').innerHTML=pub.map(c=>`<article class="card"><div class="top">${esc(c.title.split(' ').slice(-1)[0]).slice(0,10)}</div>
   <div class="body"><span class="meta">${esc(c.category)} · ${esc(c.duration)}</span><h3>${esc(c.title)}</h3><p>${esc(c.description)}</p>
   <div class="row"><span class="price">${inr(c.price_inr)}</span><span class="tag">${n?n+' slots open':'No open slots'}</span></div>
   <button class="btn" onclick="openCourse('${c.id}')">View details</button></div></article>`).join('')||'<p>No sessions yet.</p>';
