@@ -77,11 +77,11 @@ textarea{min-height:80px}
     <nav><span class="logo">Skillshop</span><a href="#courses">Courses</a></nav>
     <section class="hero">
       <h1>Learn it properly. Build it for real.</h1>
-      <p>Live, project-based courses taught in small batches. Pick a course, choose a free time with your teacher, and get the syllabus before you pay.</p>
+      <p>Live, project-based 1:1 classes, taught just for you. Pick a course, choose a time that suits you, and get the syllabus before you pay.</p>
       <button class="btn red" onclick="document.getElementById('courses').scrollIntoView({behavior:'smooth'})">Browse courses</button>
     </section>
     <section class="sheet" id="courses"><h2>Courses</h2><div class="grid" id="grid"><p class="meta">Loading courses…</p></div></section>
-    <footer><span>© 2026 Skillshop</span><span>One teacher. One slot at a time.</span></footer>
+    <footer><span>© 2026 Skillshop</span><span>Live 1:1 classes. Your pace, your questions.</span></footer>
   </div>
 </div>
 
@@ -132,7 +132,7 @@ function openCourse(id){
   const c=courses.find(x=>x.id===id),o=slots.filter(free);bk={cid:id};const u=pdfUrl(c.syllabus_path);
   $('dlg').innerHTML=`<h2>${esc(c.title)}</h2><p class="meta">${esc(c.level)} · ${esc(c.duration)}</p><p>${esc(c.description)}</p>
   ${u?`<p><a href="${u}" target="_blank" rel="noopener" class="btn ghost sm" style="text-decoration:none;display:inline-block">Download syllabus (PDF)</a></p>`:'<p class="meta">Syllabus PDF not uploaded yet.</p>'}
-  <h3 style="font-size:16px;margin-top:18px">Choose a time with your teacher</h3>
+  <h3 style="font-size:16px;margin-top:18px">Choose a time for your 1:1 class</h3>
   ${o.length?o.map((s,i)=>`<label class="slot"><span><input type="radio" name="sl" value="${s.id}" ${i?'':'checked'}> ${esc(fmt(s.starts_at))}</span></label>`).join(''):'<p class="meta">No free times right now. Please check back soon.</p>'}
   <label class="f" for="b_n">Your name</label><input type="text" id="b_n" autocomplete="name"><label class="f" for="b_e">Email</label><input type="email" id="b_e" autocomplete="email">
   <p id="berr" class="meta" style="color:var(--red)"></p>
