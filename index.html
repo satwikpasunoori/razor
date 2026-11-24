@@ -6,82 +6,42 @@
 <title>Skillshop — 1:1 Sessions</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#fff;--ink:#111;--mute:#6b6b6b;--line:#e4e4e4;--panel:#fff;--soft:#f4f4f4;--red:#c8102e;--ghost:#111;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d0d0d;--ink:#f3f3f3;--mute:#9a9a9a;--line:#2c2c2c;--panel:#161616;--soft:#202020;--ghost:#fff;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#0d0d0d;--ink:#f3f3f3;--mute:#9a9a9a;--line:#2c2c2c;--panel:#161616;--soft:#202020;--ghost:#fff;color-scheme:dark}
-html{scroll-padding-top:env(safe-area-inset-top,0px)}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:'DM Sans',system-ui,sans-serif;line-height:1.5}
-h1,h2,h3{font-family:'Poppins',system-ui,sans-serif;margin:0;letter-spacing:-.02em}
-button{font:inherit;cursor:pointer}
-:focus-visible{outline:3px solid var(--red);outline-offset:2px}
-/* poster background */
-.poster{position:absolute;inset:0 0 auto 0;height:900px;overflow:hidden;z-index:0;pointer-events:none;user-select:none}
-.poster b{display:block;font:800 clamp(88px,19vw,260px)/.86 'Poppins',sans-serif;letter-spacing:-.04em;color:var(--ghost);padding:0 4vw;white-space:nowrap}
-.poster i{position:absolute;font:400 13px 'DM Sans';letter-spacing:.4em;color:var(--ghost)}
-.shell{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:0 20px}
-nav{display:flex;justify-content:space-between;align-items:center;padding:22px 0}
-nav .logo{font:800 20px 'Poppins';background:var(--bg);padding:2px 10px}
-nav a{color:var(--ink);text-decoration:none;font-weight:500;background:var(--bg);padding:2px 10px}
-/* overlapping panel */
-.hero{margin-top:230px;background:var(--panel);border:2px solid var(--ink);padding:36px;max-width:640px;box-shadow:14px 14px 0 var(--ink)}
-.hero h1{font-size:clamp(30px,5vw,48px);line-height:1.05}
-.hero p{color:var(--mute);margin:14px 0 24px;max-width:46ch}
-.btn{border:2px solid var(--ink);background:var(--ink);color:var(--bg);padding:11px 20px;font-weight:700}
-.btn.red{background:var(--red);border-color:var(--red);color:#fff}
-.btn.ghost{background:transparent;color:var(--ink)}
-.btn.sm{padding:6px 12px;font-size:14px}
-.btn:disabled{opacity:.4;cursor:not-allowed}
-.sheet{background:var(--panel);border:2px solid var(--ink);margin:70px 0 40px;padding:32px}
-.sheet h2{font-size:28px;margin-bottom:22px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px}
-.card{border:1px solid var(--line);background:var(--soft);display:flex;flex-direction:column}
-.card .top{padding:26px 20px;border-bottom:1px solid var(--line);font:800 44px/1 'Poppins';letter-spacing:-.04em}
-.card .body{padding:18px 20px;display:flex;flex-direction:column;gap:8px;flex:1}
-.card h3{font-size:18px}
-.card p{margin:0;color:var(--mute);font-size:15px}
-.meta{font-size:13px;color:var(--mute)}
-.row{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:auto;padding-top:12px}
-.price{font:800 22px 'Poppins'}
-.tag{font-size:12px;font-weight:700;border:1px solid var(--ink);padding:1px 8px}
-footer{padding:20px 0 50px;color:var(--mute);font-size:14px;display:flex;justify-content:space-between}
-footer a{color:var(--mute)}
-/* modal */
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:50;padding:16px}
-.modal.on{display:flex}
-.dlg{background:var(--panel);border:2px solid var(--ink);max-width:560px;width:100%;max-height:90vh;overflow:auto;padding:26px}
-.slot{display:flex;justify-content:space-between;align-items:center;border:1px solid var(--line);padding:10px 12px;margin:8px 0;gap:8px}
-.slot input[type=radio]{accent-color:var(--red)}
-label.f{display:block;font-size:13px;font-weight:700;margin:12px 0 4px}
-input[type=text],input[type=email],input[type=date],input[type=time],input[type=number],input[type=password],textarea,select{width:100%;padding:9px 10px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:inherit}
-textarea{min-height:80px}
-.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 18px;font-weight:700;z-index:99;display:none}
-/* admin */
-.admin{max-width:900px;margin:40px auto;background:var(--panel);border:2px solid var(--ink);padding:28px}
-.arow{display:flex;flex-wrap:wrap;gap:10px;align-items:center;border-bottom:1px solid var(--line);padding:14px 0}
-.arow .t{flex:1;min-width:200px;font-weight:700}
-.stepper{display:flex;align-items:center;gap:6px}
-.stepper b{min-width:76px;text-align:center;font-family:'Poppins'}
-.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.hide{display:none!important}.ok{color:#1a7f37}.mail{border:1px dashed var(--ink);padding:12px;font-size:14px;margin:12px 0;background:var(--soft)}.booked{opacity:.55}
-@media(max-width:560px){.hero{padding:22px;box-shadow:8px 8px 0 var(--ink)}.sheet,.admin{padding:18px}.two{grid-template-columns:1fr}.poster{height:620px}.hero{margin-top:150px}}
-@media (prefers-reduced-motion:no-preference){.hero{animation:rise .6s ease-out both}@keyframes rise{from{transform:translateY(24px);opacity:0}}}
+:root{--bg:#f5f6fb;--ink:#17213b;--mute:#68738b;--line:#e4e8f1;--panel:#fff;--soft:#f7f8fc;--red:#635bff;--ghost:#17213b;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:24px}body{margin:0;background:var(--bg);color:var(--ink);font-family:'DM Sans',system-ui,sans-serif;line-height:1.6}h1,h2,h3{font-family:'Poppins',system-ui,sans-serif;margin:0;letter-spacing:-.04em}button{font:inherit;cursor:pointer}:focus-visible{outline:3px solid #8b85ff;outline-offset:3px}
+#site{min-height:100vh;background:radial-gradient(ellipse at 80% 4%,rgba(99,91,255,.12),transparent 32%),var(--bg)}
+.shell{position:relative;max-width:1160px;margin:0 auto;padding:0 28px}nav{height:86px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(23,33,59,.08)}nav .logo{font:800 23px 'Poppins';letter-spacing:-1.2px;color:var(--ink)}nav .logo:before{content:'';display:inline-block;width:11px;height:11px;border-radius:4px;background:var(--red);margin:0 10px 2px 0;transform:rotate(12deg)}nav a{color:var(--ink);text-decoration:none;font-weight:700;padding:10px 17px;border:1px solid var(--line);border-radius:999px;background:#fff;transition:.2s}nav a:hover{border-color:var(--red);color:var(--red)}
+.hero{margin:48px 0 72px;min-height:410px;padding:58px 60px;border-radius:28px;background:linear-gradient(120deg,#171f3b 0%,#252e55 58%,#4843a4 100%);color:#fff;display:flex;align-items:center;position:relative;overflow:hidden;box-shadow:0 24px 60px rgba(32,39,82,.16);animation:rise .6s ease-out both}.hero:after{content:'';position:absolute;width:390px;height:390px;border:1px solid rgba(255,255,255,.16);border-radius:50%;right:7%;top:50%;transform:translateY(-50%);box-shadow:0 0 0 42px rgba(255,255,255,.035),0 0 0 84px rgba(255,255,255,.025)}.hero-copy{position:relative;z-index:1;max-width:610px}.eyebrow{display:inline-flex;align-items:center;gap:9px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:#c9c7ff;margin-bottom:20px}.eyebrow:before{content:'';width:22px;height:2px;background:#aaa5ff}.hero h1{font-size:clamp(36px,5vw,62px);line-height:1.08;max-width:650px}.hero p{color:#c5cbe0;margin:20px 0 28px;max-width:490px;font-size:16px}.hero-note{position:absolute;right:10%;top:50%;transform:translateY(-50%);z-index:1;width:205px;height:205px;border:1px solid rgba(255,255,255,.22);border-radius:26px;background:rgba(255,255,255,.09);backdrop-filter:blur(10px);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;rotate:7deg}.hero-note strong{font:800 48px 'Poppins';line-height:1}.hero-note span{font-size:12px;color:#d6d9eb;letter-spacing:.12em;text-transform:uppercase;margin-top:10px}
+.btn{border:1px solid var(--ink);border-radius:12px;background:var(--ink);color:#fff;padding:12px 20px;font-weight:700;transition:transform .18s,box-shadow .18s,background .18s}.btn:hover{transform:translateY(-2px);box-shadow:0 8px 18px rgba(23,33,59,.16)}.btn.red{background:var(--red);border-color:var(--red);color:#fff}.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}.hero .btn.ghost{color:#fff;border-color:rgba(255,255,255,.35)}.btn.sm{padding:7px 12px;font-size:13px;border-radius:9px}.btn:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}
+.sheet{margin:0 0 52px;padding:0;background:transparent;border:0}.section-head{display:flex;justify-content:space-between;align-items:end;gap:16px;margin-bottom:24px}.section-kicker{font-size:11px;text-transform:uppercase;letter-spacing:.16em;color:var(--red);font-weight:800}.sheet h2{font-size:32px;margin-top:4px}.section-head p{margin:0;color:var(--mute);font-size:14px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:20px}.card{border:1px solid var(--line);border-radius:20px;background:var(--panel);display:flex;flex-direction:column;overflow:hidden;box-shadow:0 8px 28px rgba(31,43,80,.045);transition:transform .2s,box-shadow .2s}.card:hover{transform:translateY(-5px);box-shadow:0 18px 38px rgba(31,43,80,.1)}.card .top{min-height:132px;padding:24px 22px;display:flex;align-items:end;border:0;background:linear-gradient(135deg,#e9e8ff,#f2f1ff);color:#4e48c7;font:800 39px/1 'Poppins';letter-spacing:-.06em}.card:nth-child(3n+2) .top{background:linear-gradient(135deg,#e2f5f0,#effaf6);color:#23856d}.card:nth-child(3n) .top{background:linear-gradient(135deg,#fff0e5,#fff7f0);color:#bd7040}.card .body{padding:22px;display:flex;flex-direction:column;gap:9px;flex:1}.card h3{font-size:19px;line-height:1.3}.card p{margin:0;color:var(--mute);font-size:14px}.meta{font-size:13px;color:var(--mute)}.row{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:auto;padding-top:14px}.price{font:800 22px 'Poppins';letter-spacing:-.04em}.tag{font-size:11px;font-weight:700;border-radius:999px;background:#f0efff;color:#554ef0;padding:5px 10px;border:0}.card .btn{width:100%;margin-top:10px}.card .body>.meta:first-child{font-size:11px;text-transform:uppercase;letter-spacing:.08em;font-weight:700;color:#777f98}
+footer{padding:25px 0 45px;color:var(--mute);font-size:13px;display:flex;justify-content:space-between;border-top:1px solid var(--line)}footer a{color:var(--mute)}
+.modal{position:fixed;inset:0;background:rgba(13,20,43,.62);backdrop-filter:blur(7px);display:none;align-items:center;justify-content:center;z-index:50;padding:16px}.modal.on{display:flex}.dlg{background:var(--panel);border:1px solid var(--line);border-radius:22px;max-width:560px;width:100%;max-height:90vh;overflow:auto;padding:28px;box-shadow:0 24px 80px rgba(0,0,0,.22)}.dlg h2{font-size:25px;line-height:1.2}.slot{display:flex;justify-content:space-between;align-items:center;border:1px solid var(--line);border-radius:11px;padding:11px 13px;margin:8px 0;gap:8px;background:#fafbff}.slot input[type=radio]{accent-color:var(--red)}label.f{display:block;font-size:12px;font-weight:700;color:var(--ink);margin:14px 0 5px}input[type=text],input[type=email],input[type=date],input[type=time],input[type=number],input[type=password],textarea,select{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:10px;background:#fbfcff;color:var(--ink);font:inherit}input:focus,textarea:focus,select:focus{outline:2px solid rgba(99,91,255,.22);border-color:var(--red)}textarea{min-height:90px}.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:#17213b;color:#fff;padding:11px 18px;border-radius:10px;font-weight:700;z-index:99;display:none;box-shadow:0 8px 24px rgba(0,0,0,.2)}
+.admin{max-width:960px;margin:40px auto;background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:30px;box-shadow:0 12px 38px rgba(31,43,80,.07)}.admin h2{font-size:27px}.admin h3{font-size:17px!important}.arow{display:flex;flex-wrap:wrap;gap:10px;align-items:center;border-bottom:1px solid var(--line);padding:15px 0}.arow .t{flex:1;min-width:200px;font-weight:700}.stepper{display:flex;align-items:center;gap:6px}.stepper b{min-width:76px;text-align:center;font-family:'Poppins'}.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}.hide{display:none!important}.ok{color:#16865d}.mail{border:1px dashed var(--ink);border-radius:10px;padding:12px;font-size:14px;margin:12px 0;background:var(--soft)}.booked{opacity:.55}
+@keyframes rise{from{transform:translateY(18px);opacity:0}to{transform:translateY(0);opacity:1}}
+@media(max-width:760px){.hero{padding:42px 34px;min-height:360px}.hero-note{right:5%;width:140px;height:140px;opacity:.75}.hero-note strong{font-size:36px}.hero-copy{max-width:75%}}
+@media(max-width:560px){.shell{padding:0 17px}nav{height:72px}.hero{margin:25px 0 48px;padding:34px 24px;min-height:0;border-radius:21px}.hero-copy{max-width:100%}.hero h1{font-size:38px}.hero p{font-size:14px}.hero-note{display:none}.section-head{display:block}.section-head p{margin-top:8px}.sheet h2{font-size:28px}.grid{grid-template-columns:1fr;gap:15px}.card .top{min-height:105px}.sheet,.admin{padding:0}.admin{margin:18px 12px;padding:20px}.two{grid-template-columns:1fr}.dlg{padding:22px;border-radius:18px}footer{gap:8px;flex-direction:column}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 </head>
 <body>
 <div id="site">
-  <div class="poster" aria-hidden="true"><b>LEARN</b><b>BUILD</b><b>EARN</b><i style="left:6vw;top:830px">START TODAY</i><i style="right:6vw;top:830px;letter-spacing:.1em;font-style:italic">v1.0</i></div>
   <div class="shell">
-    <nav><span class="logo">Skillshop</span><a href="#sessions">Sessions</a></nav>
+    <nav><span class="logo">Skillshop</span><a href="#sessions">Explore sessions&nbsp; ↗</a></nav>
     <section class="hero">
-      <h1>Learn it properly. Use it for real.</h1>
-      <p>Live one-hour 1:1 sessions on trading, AI tools, money and fitness. Pick a topic, choose a time that suits you, and get the details before you pay.</p>
-      <button class="btn red" onclick="document.getElementById('sessions').scrollIntoView({behavior:'smooth'})">Browse sessions</button>
+      <div class="hero-copy">
+        <span class="eyebrow">Learn by doing · Grow with confidence</span>
+        <h1>Turn what you’re curious about into what you can do.</h1>
+        <p>Practical, live sessions built around real skills. Choose a topic, book a time, and learn directly with a mentor.</p>
+        <button class="btn red" onclick="document.getElementById('sessions').scrollIntoView({behavior:'smooth'})">Explore sessions&nbsp; →</button>
+      </div>
+      <div class="hero-note" aria-hidden="true"><strong>1:1</strong><span>Personal learning</span></div>
     </section>
-    <section class="sheet" id="sessions"><h2>Sessions</h2><div class="grid" id="grid"><p class="meta">Loading sessions…</p></div></section>
-    <footer><span>© 2026 Skillshop</span><span>Live 1:1 sessions. One hour, fully yours.</span></footer>
+    <section class="sheet" id="sessions">
+      <div class="section-head"><div><span class="section-kicker">Choose your next step</span><h2>Explore sessions</h2></div><p>Focused learning. Practical outcomes.</p></div>
+      <div class="grid" id="grid"><p class="meta">Loading sessions…</p></div>
+    </section>
+    <footer><span>© 2026 Skillshop</span><span>Learn something useful. Put it into action.</span></footer>
   </div>
 </div>
 
